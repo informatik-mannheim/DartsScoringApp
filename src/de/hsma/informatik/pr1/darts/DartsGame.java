@@ -23,4 +23,8 @@ public class DartsGame {
 		return sb.toString();
 	}
 
+	public int subtractPointsForCurrentPlayer(int score) {
+		return players[0].subtractPoints(score);
+	}
+
 }

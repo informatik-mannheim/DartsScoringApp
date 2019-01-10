@@ -16,4 +16,9 @@ public class Player {
 	public int getCurrentPoints() {
 		return currentPoints;
 	}
+
+	public int subtractPoints(int score) {
+		currentPoints -= score;
+		return currentPoints;
+	}
 }
