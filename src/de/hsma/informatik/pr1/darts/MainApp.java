@@ -2,7 +2,7 @@ package de.hsma.informatik.pr1.darts;
 
 /**
  * DartsScoringApp
- * An (initially) simple Java for for counting scores in Dart games.
+ * An (initially) simple Java for counting scores in Dart games.
  * 
  * Intended as a manageable real world example in Java programming 
  * for first semester computer science students at Hochschule Mannheim.
