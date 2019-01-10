@@ -1,5 +1,7 @@
 package de.hsma.informatik.pr1.darts;
 
+import de.hsma.informatik.pr1.darts.consoleUi.TextUi;
+
 /**
  * DartsScoringApp
  * An (initially) simple Java for counting scores in Dart games.
@@ -13,7 +15,10 @@ package de.hsma.informatik.pr1.darts;
 public class MainApp {
 
 	public static void main(String[] args) {
-		System.out.println("Hello Darts!");
+		DartsGame game = new DartsGame(501, 2);
+		TextUi ui = new TextUi(game);
+		
+		ui.playGame();
 	}
 
 }
