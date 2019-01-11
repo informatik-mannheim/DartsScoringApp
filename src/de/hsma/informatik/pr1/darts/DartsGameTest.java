@@ -49,6 +49,8 @@ class DartsGameTest {
 		game.nextPlayer();
 		sb = game.generateScoreboard();
 		assertTrue(sb.contains("Round 4"));
+		
+		assertEquals(-401, game.subtractPointsForCurrentPlayer(405));
 	}
 
 }

@@ -27,8 +27,9 @@ public class TextUi {
 			System.out.println(game.generateScoreboard());
 			System.out.println("Next Player: " + game.getCurrentPlayerName());
 
+			int sum = 0;
 			for (int d = 1; d <= 3; d++) {
-				System.out.print("> ");
+				System.out.print(d + "> ");
 
 				String input = kb.nextLine();
 
@@ -36,19 +37,23 @@ public class TextUi {
 					break gameLoop;
 
 				int score = Board.parseInput(input);
-				score = game.subtractPointsForCurrentPlayer(score);
-				System.out.println("\t-> " + Math.abs(score));
+				sum += score;
 				
-				if (score == 0) {
+				int remaining = game.subtractPointsForCurrentPlayer(score);
+				System.out.println("\t-> " + Math.abs(remaining));
+				
+				if (remaining == 0) {
 					System.out.println("Player wins!");
 					break gameLoop;
-				} else if (score < 0) {
+				} else if (remaining < 0) {
 					System.out.println("Overthrown!");
+					sum = 0;
 					break;
 				}
 			}
+			System.out.println("Sum: " + sum);
+			
 			System.out.println();
-
 			game.nextPlayer();
 		} while(true);
 
