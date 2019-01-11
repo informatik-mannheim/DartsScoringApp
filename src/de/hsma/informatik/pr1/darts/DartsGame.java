@@ -2,8 +2,10 @@ package de.hsma.informatik.pr1.darts;
 
 public class DartsGame {
 	private Player[] players;
+	private int counter;
 
 	public DartsGame(int points, int numberOfPlayers) {
+		counter = 0;
 		players = new Player[numberOfPlayers];
 		
 		for (int p = 0; p < numberOfPlayers; p++) {
@@ -24,7 +26,15 @@ public class DartsGame {
 	}
 
 	public int subtractPointsForCurrentPlayer(int score) {
-		return players[0].subtractPoints(score);
+		return players[counter % players.length].subtractPoints(score);
 	}
-
+	
+	public void nextPlayer() {
+		counter++;
+	}
+	
+	public String getCurrentPlayerName() {
+		return players[counter % players.length].getName();
+	}
+ 
 }
