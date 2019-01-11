@@ -37,7 +37,15 @@ public class TextUi {
 
 				int score = Board.parseInput(input);
 				score = game.subtractPointsForCurrentPlayer(score);
-				System.out.println("\t-> " + score);
+				System.out.println("\t-> " + Math.abs(score));
+				
+				if (score == 0) {
+					System.out.println("Player wins!");
+					break gameLoop;
+				} else if (score < 0) {
+					System.out.println("Overthrown!");
+					break;
+				}
 			}
 			System.out.println();
 
@@ -46,6 +54,7 @@ public class TextUi {
 
 		kb.close();
 
+		System.out.println();
 		System.out.println("Good bye from the Darts Scoring App!");
 	}
 

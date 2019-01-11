@@ -21,4 +21,9 @@ public class Player {
 		currentPoints -= score;
 		return currentPoints;
 	}
+
+	public void resetPointsToPreviousValue(int previousPoints) {
+		currentPoints = previousPoints;
+	}
+	
 }
