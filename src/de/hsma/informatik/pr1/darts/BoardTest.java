@@ -24,15 +24,19 @@ class BoardTest {
 	void testInputParsingForBullAndBullsEye() {
 		assertEquals(25, parseInput("bl"));
 		assertEquals(25, parseInput("BL"));
+		
 		assertEquals(50, parseInput("be"));
 		assertEquals(50, parseInput("BE"));
+		
+		assertEquals(25, parseInput("BULL"));
+		assertEquals(50, parseInput("Bull's Eye"));
 	}
 	
 	@Test
 	void testInputParsingForSingleScores() {
 		assertEquals(25, parseInput("25"));
 
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i <= 20; i++) {
 			assertEquals(i, parseInput("" + i));
 		}
 	}
@@ -42,7 +46,7 @@ class BoardTest {
 		assertEquals(0, parseInput("-"));
 		assertEquals(0, parseInput("--"));
 		assertEquals(0, parseInput("ms"));
-		assertEquals(0, parseInput("bo"));
+		assertEquals(0, parseInput("Bo"));
 	}
 
 }

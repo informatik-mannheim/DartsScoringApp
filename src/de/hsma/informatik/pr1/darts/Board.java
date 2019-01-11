@@ -17,8 +17,8 @@ public class Board {
 		}
 		
 		switch (input) {
-			case "bl": points = 25; break;
-			case "be": points = 25; factor = 2; break;
+			case "bl": case "bull": points = 25; break;
+			case "be": case "bull's eye": points = 25; factor = 2; break;
 			case "ms": case "bo": case "-": case "--": break;
 			default: points = Integer.parseInt(input);
 		}
