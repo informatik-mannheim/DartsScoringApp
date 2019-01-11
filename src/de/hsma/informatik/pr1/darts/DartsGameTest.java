@@ -22,6 +22,33 @@ class DartsGameTest {
 		assertTrue(sb.contains("0 darts"));
 		
 		assertEquals(441, game.subtractPointsForCurrentPlayer(60));
+	
+		game.nextPlayer();  // -> Player 1
+		sb = game.generateScoreboard();
+		assertTrue(sb.contains("501"));
+		assertTrue(sb.contains("441"));
+		assertTrue(sb.contains("Round 2"));
+		
+		assertEquals(500, game.subtractPointsForCurrentPlayer(1));
+		sb = game.generateScoreboard();
+		assertTrue(sb.contains("500"));
+		assertTrue(sb.contains("441"));
+		assertTrue(sb.contains("Round 2"));
+		
+		game.nextPlayer();   // -> Player 2
+		assertEquals(401, game.subtractPointsForCurrentPlayer(40));
+		sb = game.generateScoreboard();
+		assertTrue(sb.contains("401"));
+		
+		game.nextPlayer();  // -> Player 1
+		assertEquals(name1, game.getCurrentPlayerName());
+		game.nextPlayer();  // -> Player 2
+		assertEquals(name2, game.getCurrentPlayerName());
+		
+		game.nextPlayer();
+		game.nextPlayer();
+		sb = game.generateScoreboard();
+		assertTrue(sb.contains("Round 4"));
 	}
 
 }
