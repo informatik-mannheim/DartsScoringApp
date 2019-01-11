@@ -16,7 +16,7 @@ public class DartsGame {
 	}
 
 	public String generateScoreboard() {
-		StringBuilder sb = new StringBuilder("Round: " + (counter / 2 + 1) + "\n");
+		StringBuilder sb = new StringBuilder("Round " + (counter / 2 + 1) + "\n");
 		
 		for (Player p : players) {
 			sb.append(p.getName() + ": ");
