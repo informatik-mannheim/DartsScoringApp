@@ -6,6 +6,8 @@ public class Board {
 		int points = 0;
 		int factor = 1;
 		
+		input = input.toLowerCase().trim();
+		
 		if (input.startsWith("d")) {
 			factor = 2;
 			input = input.substring(1);
@@ -17,7 +19,7 @@ public class Board {
 		switch (input) {
 			case "bl": points = 25; break;
 			case "be": points = 25; factor = 2; break;
-			case "ms": case "bo": break;
+			case "ms": case "bo": case "-": case "--": break;
 			default: points = Integer.parseInt(input);
 		}
 		

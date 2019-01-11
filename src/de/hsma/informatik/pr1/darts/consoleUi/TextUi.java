@@ -30,7 +30,7 @@ public class TextUi {
 			for (int d = 1; d <= 3; d++) {
 				System.out.print("> ");
 
-				String input = kb.nextLine().toLowerCase().trim();
+				String input = kb.nextLine();
 
 				if (input.equals("exit"))
 					break gameLoop;
