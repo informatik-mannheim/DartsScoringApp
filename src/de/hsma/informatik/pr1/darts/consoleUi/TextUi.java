@@ -66,20 +66,25 @@ public class TextUi {
 	}
 	
 	private String generateScoreboard(ScoreDTO score) {
-		StringBuilder sb = new StringBuilder("Round " + (score.getPlayerCounter() / 2 + 1) + "\n");
+		StringBuilder sb = new StringBuilder("-".repeat(12) + "\n");
+		sb.append(String.format("| Round %-2d | \n", (score.getPlayerCounter() / 2 + 1)));
 		
 		int longest = 6;
 		for (Player p : score.getPlayers()) {
 			longest = Math.max(longest, p.getName().length());
 		}
 		
+		String separation = "-".repeat(20 + longest) + "\n";
+		sb.append(separation);
 		sb.append(String.format("| Player%" + (longest-6) + "s | Score | Darts |\n", ""));
+		sb.append(separation);
 		for (Player p : score.getPlayers()) {
 			sb.append(String.format("| %" + longest + "s ", p.getName()));
 			sb.append(String.format("| %5d ", p.getCurrentPoints()));
 			sb.append(String.format("| %5d |", p.getNumberOfDarts()));
 			sb.append("\n");
 		}
+		sb.append(separation);
 		
 		return sb.toString();
 	}
