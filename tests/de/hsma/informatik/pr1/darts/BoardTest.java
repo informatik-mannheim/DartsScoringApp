@@ -1,7 +1,7 @@
 package de.hsma.informatik.pr1.darts;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static de.hsma.informatik.pr1.darts.Board.parseInput;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 

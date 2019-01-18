@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import de.hsma.informatik.pr1.darts.Board;
 import de.hsma.informatik.pr1.darts.DartsGame;
+import de.hsma.informatik.pr1.darts.Player;
+import de.hsma.informatik.pr1.darts.ScoreDTO;
 
 public class TextUi {
 	private DartsGame game;
@@ -24,7 +26,7 @@ public class TextUi {
 
 		gameLoop:
 		do {
-			System.out.println(game.generateScoreboard());
+			System.out.println(generateScoreboard(game.getScore()));
 			System.out.println("Next Player: " + game.getCurrentPlayerName());
 
 			int sum = 0;
@@ -61,6 +63,19 @@ public class TextUi {
 
 		System.out.println();
 		System.out.println("Good bye from the Darts Scoring App!");
+	}
+	
+	private String generateScoreboard(ScoreDTO score) {
+		StringBuilder sb = new StringBuilder("Round " + (score.getPlayerCounter() / 2 + 1) + "\n");
+		
+		for (Player p : score.getPlayers()) {
+			sb.append(p.getName() + ": ");
+			sb.append(p.getCurrentPoints() + " points");
+			sb.append(", " + p.getNumberOfDarts() + " darts thrown so far");
+			sb.append("\n");
+		}
+		
+		return sb.toString();
 	}
 
 }

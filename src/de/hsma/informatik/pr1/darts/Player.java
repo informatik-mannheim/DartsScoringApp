@@ -18,22 +18,22 @@ public class Player {
 	public int getCurrentPoints() {
 		return currentPoints;
 	}
+	
+	public int getNumberOfDarts() {
+		return numberOfDarts;
+	}
 
-	public int subtractPoints(int score) {
+	int subtractPoints(int score) {
 		currentPoints -= score;
 		return currentPoints;
 	}
 
-	public void resetPointsToPreviousValue(int previousPoints) {
+	void resetPointsToPreviousValue(int previousPoints) {
 		currentPoints = previousPoints;
 	}
 	
-	public void addDart() {
+	void addDart() {
 		numberOfDarts++;
-	}
-	
-	public int getNumberOfDarts() {
-		return numberOfDarts;
 	}
 	
 }

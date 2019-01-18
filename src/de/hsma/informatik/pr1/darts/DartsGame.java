@@ -15,17 +15,8 @@ public class DartsGame {
 		}
 	}
 
-	public String generateScoreboard() {
-		StringBuilder sb = new StringBuilder("Round " + (counter / 2 + 1) + "\n");
-		
-		for (Player p : players) {
-			sb.append(p.getName() + ": ");
-			sb.append(p.getCurrentPoints() + " points");
-			sb.append(", " + p.getNumberOfDarts() + " darts thrown so far");
-			sb.append("\n");
-		}
-		
-		return sb.toString();
+	public ScoreDTO getScore() {
+		return new ScoreDTO(players, counter);
 	}
 
 	public int subtractPointsForCurrentPlayer(int score) {
