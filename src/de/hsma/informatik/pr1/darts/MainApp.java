@@ -4,7 +4,7 @@ import de.hsma.informatik.pr1.darts.consoleUi.TextUi;
 
 /**
  * DartsScoringApp
- * An (initially) simple Java for counting scores in Dart games.
+ * A simple Java application for counting scores in Dart games.
  * 
  * Intended as a manageable real world example in Java programming 
  * for first semester computer science students at Hochschule Mannheim.
