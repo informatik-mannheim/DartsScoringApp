@@ -8,7 +8,8 @@ class DartsGameTest {
 
 	@Test
 	void testGame() {
-		DartsGame game = new DartsGame(501, 2);
+		DartsGame game = new DartsGame(
+				new GameParameterDTO(501, new String[] {"Player 1", "Player 2"}));
 		
 		String name1 = game.getCurrentPlayerName();
 		game.nextPlayer();

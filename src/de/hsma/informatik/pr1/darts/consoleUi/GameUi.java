@@ -7,16 +7,15 @@ import de.hsma.informatik.pr1.darts.DartsGame;
 import de.hsma.informatik.pr1.darts.Player;
 import de.hsma.informatik.pr1.darts.ScoreDTO;
 
-public class TextUi {
+public class GameUi {
 	private DartsGame game;
 	private Scanner kb;
 
-	public TextUi(DartsGame game) {
+	public GameUi(DartsGame game) {
 		super();
 		this.game = game;
 		kb = new Scanner(System.in);
 
-		System.out.println("Hello Darts!");
 		System.out.println();
 	}
 
@@ -59,14 +58,12 @@ public class TextUi {
 			game.nextPlayer();
 		} while(true);
 
-		kb.close();
-
 		System.out.println();
 		System.out.println("Good bye from the Darts Scoring App!");
 	}
 	
 	private String generateScoreboard(ScoreDTO score) {
-		StringBuilder sb = new StringBuilder("-".repeat(12) + "\n");
+		StringBuilder sb = new StringBuilder(" " + "-".repeat(10) + "\n");
 		sb.append(String.format("| Round %-2d | \n", (score.getPlayerCounter() / 2 + 1)));
 		
 		int longest = 6;
@@ -74,9 +71,10 @@ public class TextUi {
 			longest = Math.max(longest, p.getName().length());
 		}
 		
-		String separation = "-".repeat(20 + longest) + "\n";
+		String separation = " " + "-".repeat(19 + longest) + "\n";
 		sb.append(separation);
-		sb.append(String.format("| Player%" + (longest-6) + "s | Score | Darts |\n", ""));
+		sb.append(String.format("| Player%" + (Math.max(longest - 5, 1)) 
+												+ "s| Score | Darts |\n", ""));
 		sb.append(separation);
 		for (Player p : score.getPlayers()) {
 			sb.append(String.format("| %" + longest + "s ", p.getName()));

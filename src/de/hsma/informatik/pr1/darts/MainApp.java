@@ -1,6 +1,7 @@
 package de.hsma.informatik.pr1.darts;
 
-import de.hsma.informatik.pr1.darts.consoleUi.TextUi;
+import de.hsma.informatik.pr1.darts.consoleUi.ParamaterUi;
+import de.hsma.informatik.pr1.darts.consoleUi.GameUi;
 
 /**
  * DartsScoringApp
@@ -15,10 +16,14 @@ import de.hsma.informatik.pr1.darts.consoleUi.TextUi;
 public class MainApp {
 
 	public static void main(String[] args) {
-		DartsGame game = new DartsGame(501, 2);
-		TextUi ui = new TextUi(game);
+		GameParameterDTO params = new ParamaterUi().enterGameParameters();
 		
+		DartsGame game = new DartsGame(params);
+		
+		GameUi ui = new GameUi(game);
 		ui.playGame();
+		
+		ParamaterUi.kb.close();
 	}
 
 }
