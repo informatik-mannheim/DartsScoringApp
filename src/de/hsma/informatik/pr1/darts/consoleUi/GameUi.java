@@ -64,7 +64,8 @@ public class GameUi {
 	
 	private String generateScoreboard(ScoreDTO score) {
 		StringBuilder sb = new StringBuilder(" " + "-".repeat(10) + "\n");
-		sb.append(String.format("| Round %-2d | \n", (score.getPlayerCounter() / 2 + 1)));
+		sb.append(String.format("| Round %-2d | \n", 
+				(score.getPlayerCounter() / score.getPlayers().length + 1)));
 		
 		int longest = 6;
 		for (Player p : score.getPlayers()) {
