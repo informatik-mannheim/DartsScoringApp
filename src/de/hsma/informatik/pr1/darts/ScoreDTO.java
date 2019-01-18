@@ -16,7 +16,5 @@ public class ScoreDTO {
 	public Player[] getPlayers() {
 		return players;
 	}
-	
-	
 
 }
