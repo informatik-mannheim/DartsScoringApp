@@ -1,10 +1,12 @@
-package de.hsma.informatik.pr1.darts;
+package de.hsma.informatik.pr1.darts.dto;
 
-public class ScoreDTO {
+import de.hsma.informatik.pr1.darts.Player;
+
+public class ScoreBoardDTO {
 	private final int playerCounter;
 	private final Player[] players;
 	
-	public ScoreDTO(Player[] players, int counter) {
+	public ScoreBoardDTO(Player[] players, int counter) {
 		this.players = players;
 		playerCounter = counter;
 	}

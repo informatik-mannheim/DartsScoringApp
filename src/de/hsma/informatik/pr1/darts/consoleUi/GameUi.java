@@ -5,7 +5,9 @@ import java.util.Scanner;
 import de.hsma.informatik.pr1.darts.Board;
 import de.hsma.informatik.pr1.darts.DartsGame;
 import de.hsma.informatik.pr1.darts.Player;
-import de.hsma.informatik.pr1.darts.ScoreDTO;
+import de.hsma.informatik.pr1.darts.dto.CalculationResultDTO;
+import de.hsma.informatik.pr1.darts.dto.ParseResultDTO;
+import de.hsma.informatik.pr1.darts.dto.ScoreBoardDTO;
 
 public class GameUi {
 	private DartsGame game;
@@ -25,7 +27,7 @@ public class GameUi {
 
 		gameLoop:
 		do {
-			System.out.println(generateScoreboard(game.getScore()));
+			System.out.println(generateScoreboard(game.getScoreBoardInfo()));
 			System.out.println("Next Player: " + game.getCurrentPlayerName());
 
 			int sum = 0;
@@ -37,21 +39,28 @@ public class GameUi {
 				if (input.equals("exit"))
 					break gameLoop;
 
-				int score = Board.parseInput(input);
-				sum += score;
+				CalculationResultDTO calcResult 
+						= game.calculatePointsForCurrentPlayer(Board.parseInput(input));
 				
-				int remaining = game.subtractPointsForCurrentPlayer(score);
-				System.out.println("\t-> " + Math.abs(remaining));
+				if (calcResult.isValid()) {
+					sum += calcResult.getScore();
+					System.out.println("\t-> " + calcResult.getRemaining());
 				
-				if (remaining == 0) {
-					System.out.println("Player wins!");
-					break gameLoop;
-				} else if (remaining < 0) {
-					System.out.println("Overthrown!");
-					sum = 0;
-					break;
+					if (calcResult.getRemaining() == 0) {
+						System.out.println("Player wins!");
+						break gameLoop;
+					} 
+				} else {
+					System.out.println(calcResult.getReason() 
+							+ " -> " + calcResult.getRemaining() + " remaining");
+					
+					if (calcResult.getReason().equals("busted")) {
+						sum = 0;
+						break;
+					}
 				}
-			}
+				
+			} // for 
 			System.out.println("Sum: " + sum);
 			
 			System.out.println();
@@ -62,7 +71,7 @@ public class GameUi {
 		System.out.println("Good bye from the Darts Scoring App!");
 	}
 	
-	private String generateScoreboard(ScoreDTO score) {
+	private String generateScoreboard(ScoreBoardDTO score) {
 		StringBuilder sb = new StringBuilder(" " + "-".repeat(10) + "\n");
 		sb.append(String.format("| Round %-2d | \n", 
 				(score.getPlayerCounter() / score.getPlayers().length + 1)));

@@ -5,48 +5,82 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import de.hsma.informatik.pr1.darts.dto.ParseResultDTO;
+
 class BoardTest {
 
 	@Test
 	void testInputParsingForDoublesAndTriples() {
-		assertEquals(60, parseInput("t20"));
-		assertEquals(60, parseInput("T20"));
-		assertEquals(60, parseInput(" t20 "));
+		ParseResultDTO res = parseInput("t20 ");
+		assertEquals(60, res.getActualScore());
+		assertEquals(3, res.getFactor());
 		
-		assertEquals(4, parseInput("d2"));
-		assertEquals(22, parseInput("D11"));
-		assertEquals(2, parseInput(" d1 "));
+		res = parseInput("t20");
+		assertEquals(60, res.getActualScore());
+		assertEquals(3, res.getFactor());
 		
-		assertEquals(50, parseInput("50"));
+		res = parseInput(" T20");
+		assertEquals(60, res.getActualScore());
+		assertEquals(3, res.getFactor());
+		
+		res = parseInput("d2");
+		assertEquals(4, res.getActualScore());
+		assertEquals(2, res.getFactor());
+		
+		res = parseInput("D11");
+		assertEquals(22, res.getActualScore());
+		assertEquals(2, res.getFactor());
+		
+		res = parseInput("2");
+		assertEquals(2, res.getActualScore());
+		assertEquals(1, res.getFactor());
+		
+		res = parseInput("50");
+		assertEquals(50, res.getActualScore());
+		assertEquals(2, res.getFactor());
 	}
 	
 	@Test
 	void testInputParsingForBullAndBullsEye() {
-		assertEquals(25, parseInput("bl"));
-		assertEquals(25, parseInput("BL"));
+		ParseResultDTO res = parseInput("bl");
+		assertEquals(25, res.getActualScore());
+		res = parseInput("BL");
+		assertEquals(25, res.getActualScore());
 		
-		assertEquals(50, parseInput("be"));
-		assertEquals(50, parseInput("BE"));
+		res = parseInput("be");
+		assertEquals(50, res.getActualScore());
+		res = parseInput("BE");
+		assertEquals(50, res.getActualScore());
 		
-		assertEquals(25, parseInput("BULL"));
-		assertEquals(50, parseInput("Bull's Eye"));
+		res = parseInput("BULL");
+		assertEquals(25, res.getActualScore());
+		res = parseInput("Bull's Eye");
+		assertEquals(50, res.getActualScore());
 	}
 	
 	@Test
 	void testInputParsingForSingleScores() {
-		assertEquals(25, parseInput("25"));
-
+		ParseResultDTO res = parseInput("25");
+		assertEquals(25, res.getActualScore());
+		assertEquals(1, res.getFactor());
+	
 		for (int i = 0; i <= 20; i++) {
-			assertEquals(i, parseInput("" + i));
+			res = parseInput("" + i);
+			assertEquals(i, res.getActualScore());
+			assertEquals(1, res.getFactor());
 		}
 	}
 	
 	@Test
 	void testInputParsingForNilScores() {
-		assertEquals(0, parseInput("-"));
-		assertEquals(0, parseInput("--"));
-		assertEquals(0, parseInput("ms"));
-		assertEquals(0, parseInput("Bo"));
+		ParseResultDTO res = parseInput("-");
+		assertEquals(0, res.getActualScore());
+		res = parseInput("--");
+		assertEquals(0, res.getActualScore());
+		res = parseInput("ms");
+		assertEquals(0, res.getActualScore());
+		res = parseInput("Bo");
+		assertEquals(0, res.getActualScore());
 	}
 
 }

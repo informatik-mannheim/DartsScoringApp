@@ -1,6 +1,7 @@
 package de.hsma.informatik.pr1.darts;
 
 import de.hsma.informatik.pr1.darts.consoleUi.ParamaterUi;
+import de.hsma.informatik.pr1.darts.dto.GameParameterDTO;
 import de.hsma.informatik.pr1.darts.consoleUi.GameUi;
 
 /**
