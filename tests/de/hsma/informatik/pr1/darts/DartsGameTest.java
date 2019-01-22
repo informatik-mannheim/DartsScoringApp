@@ -29,7 +29,7 @@ class DartsGameTest {
 		assertEquals(name2, score.getPlayers()[1].getName());
 		assertEquals(1, score.getPlayerCounter());
 		
-		int points = game.calculatePointsForCurrentPlayer(new ParseResultDTO("t20", 20, 3)).getRemaining();
+		int points = game.calculatePointsForCurrentPlayer(new ParseResultDTO("t20", true, 20, 3)).getRemaining();
 		assertEquals(441, points);
 		
 		score = game.getScoreBoardInfo();
@@ -44,7 +44,7 @@ class DartsGameTest {
 		score = game.getScoreBoardInfo();
 		assertEquals(2, score.getPlayerCounter());
 		
-		points = game.calculatePointsForCurrentPlayer(new ParseResultDTO("1", 1, 1)).getRemaining();
+		points = game.calculatePointsForCurrentPlayer(new ParseResultDTO("1", true, 1, 1)).getRemaining();
 		assertEquals(500, points);
 		assertEquals(441, score.getPlayers()[1].getCurrentPoints());
 		assertEquals(500, score.getPlayers()[0].getCurrentPoints());
@@ -53,7 +53,7 @@ class DartsGameTest {
 		
 		game.nextPlayer();   // -> Player 2
 		score = game.getScoreBoardInfo();
-		points = game.calculatePointsForCurrentPlayer(new ParseResultDTO("d20", 20, 2)).getRemaining();
+		points = game.calculatePointsForCurrentPlayer(new ParseResultDTO("d20", true, 20, 2)).getRemaining();
 		assertEquals(401, points);
 		assertEquals(401, score.getPlayers()[1].getCurrentPoints());
 		
@@ -68,7 +68,7 @@ class DartsGameTest {
 		assertEquals(7, score.getPlayerCounter());
 		
 		// Test for bust
-		points = game.calculatePointsForCurrentPlayer(new ParseResultDTO("d210", 210, 2)).getRemaining();
+		points = game.calculatePointsForCurrentPlayer(new ParseResultDTO("d210", true, 210, 2)).getRemaining();
 		assertEquals(401, points );
 	}
 	
@@ -76,15 +76,16 @@ class DartsGameTest {
 	void testDoubleInGame() {
 		DartsGame game = new DartsGame(new GameParameterDTO(501, new String[] {"1", "2"}, true, false));
 		
-		CalculationResultDTO res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("t20", 20, 3));
+		CalculationResultDTO res = game.calculatePointsForCurrentPlayer(
+												new ParseResultDTO("t20", true, 20, 3));
 		assertEquals(501, res.getRemaining());
 		assertEquals("double in", res.getReason());
 		
-		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("20", 20, 1));
+		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("20", true, 20, 1));
 		assertEquals(501, res.getRemaining());
 		assertEquals("double in", res.getReason());
 		
-		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("d1", 1, 2));
+		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("d1", true, 1, 2));
 		assertEquals(499, res.getRemaining());
 		assertEquals("", res.getReason());
 	}
@@ -93,39 +94,40 @@ class DartsGameTest {
 	void testDoubleOutGame() {
 		DartsGame game = new DartsGame(new GameParameterDTO(101, new String[] {"1", "2"}, false, true));
 		
-		CalculationResultDTO res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("t20", 20, 3));
+		CalculationResultDTO res = game.calculatePointsForCurrentPlayer(
+											new ParseResultDTO("t20", true, 20, 3));
 		assertEquals(41, res.getRemaining());
 		assertEquals("", res.getReason());
 		
-		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("t20", 20, 3));
+		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("t20", true, 20, 3));
 		assertEquals(101, res.getRemaining());
 		assertEquals("busted", res.getReason());
 		
 		game.nextPlayer();
 		
-		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("t20", 20, 3));
+		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("t20", true, 20, 3));
 		assertEquals(41, res.getRemaining());
 		assertEquals("", res.getReason());
 		
-		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("d20", 20, 2));
+		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("d20", true, 20, 2));
 		assertEquals(101, res.getRemaining());
 		assertEquals("busted", res.getReason());
 		
 		game.nextPlayer();
 
-		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("T20", 20, 3));
+		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("T20", true, 20, 3));
 		assertEquals(41, res.getRemaining());
 		
-		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("1", 1, 1));
+		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("1", true, 1, 1));
 		assertEquals(40, res.getRemaining());
 		
-		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("D19", 19, 2));
+		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("D19", true, 19, 2));
 		assertEquals(2, res.getRemaining());
 		
 		game.nextPlayer();
 		game.nextPlayer();
 		
-		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("D1", 1, 2));
+		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("D1", true, 1, 2));
 		assertEquals(0, res.getRemaining());
 	}
 

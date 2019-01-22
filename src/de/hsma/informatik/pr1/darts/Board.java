@@ -23,6 +23,10 @@ public class Board {
 			case "be": case "bull's eye": points = 25; factor = 2; break;
 			case "ms": case "bo": case "-": case "--": break;
 			default: 
+				if (input.length() == 0 || input.length() > 2 || !isNumeric(input)) {
+					return new ParseResultDTO(input, false, 0, 0);
+				}
+					
 				points = Integer.parseInt(input);
 				if (points > 20 && points % 2 == 0) {
 					points /= 2;
@@ -30,7 +34,16 @@ public class Board {
 				}
 		}
 		
-		return new ParseResultDTO(input, points, factor);
+		return new ParseResultDTO(input, true, points, factor);
+	}
+	
+	private static boolean isNumeric(String input) {
+		for (int c = 0; c < input.length(); c++) {
+			if (!(input.charAt(c) >= '0' && input.charAt(c) <= '9')) 
+				return false;
+		}
+		
+		return true;
 	}
 
 }

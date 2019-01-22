@@ -23,6 +23,7 @@ public class GameUi {
 
 	public void playGame() {
 		System.out.println("A new game begins...");
+		System.out.println("Type exit to end the app or help to get a brief usage information.");
 		System.out.println();
 
 		gameLoop:
@@ -38,9 +39,21 @@ public class GameUi {
 
 				if (input.equals("exit"))
 					break gameLoop;
+				else if (input.equals("help")) {
+					printHelp();
+					d--;
+					continue;
+				}
 
+				ParseResultDTO parseResult = Board.parseInput(input);
+				if (!parseResult.isSuccessfullyParsed()) {
+					d--;
+					System.out.println("\t-> Incorrect input!");
+					continue;
+				}
+					
 				CalculationResultDTO calcResult 
-						= game.calculatePointsForCurrentPlayer(Board.parseInput(input));
+						= game.calculatePointsForCurrentPlayer(parseResult);
 				
 				if (calcResult.isValid()) {
 					sum += calcResult.getScore();
@@ -71,6 +84,19 @@ public class GameUi {
 		System.out.println("Good bye from the Darts Scoring App!");
 	}
 	
+	private void printHelp() {
+		System.out.println();
+		System.out.println("How to use the Darts Scoring App:");
+		System.out.println("Simply enter the scores thrown by the user when asked for them.");
+		System.out.println("Use can use numbers for single scores. Please mark double fields");
+		System.out.println("with a leading D and triple fields with a T, e.g. T20.");
+		System.out.println("Bull can be entered with BL, Bull's Eye with BE. You can type");
+		System.out.println("- or MS for a missed dart and BO for a bouncer.");
+		System.out.println();
+		System.out.println("Type Exit to leave the program.");
+		System.out.println();
+	}
+
 	private String generateScoreboard(ScoreBoardDTO score) {
 		StringBuilder sb = new StringBuilder(" " + "-".repeat(10) + "\n");
 		sb.append(String.format("| Round %-2d | \n", 
