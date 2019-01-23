@@ -31,15 +31,15 @@ public class DartsGame {
 
 	public CalculationResultDTO calculatePointsForCurrentPlayer(ParseResultDTO parsed) {
 		Player player = players[counter % players.length];
-		player.addDart();
 		int oldPoints = player.getCurrentPoints();
 		
 		int score = parsed.getActualScore();
 		CalculationResultDTO result;
 		
-		if (doubleIn && oldPoints == startingPoints && parsed.getFactor() != 2)
+		if (doubleIn && oldPoints == startingPoints && parsed.getFactor() != 2) {
 			result = new CalculationResultDTO(0, startingPoints, "double in");
-		else if (oldPoints - score < 0
+			player.subtractPoints(0);
+		} else if (oldPoints - score < 0
 				|| doubleOut && oldPoints - score == 1
 				|| doubleOut && oldPoints - score == 0 && parsed.getFactor() != 2) {
 			result = new CalculationResultDTO(0, pointsBeforeThisRound, "busted");

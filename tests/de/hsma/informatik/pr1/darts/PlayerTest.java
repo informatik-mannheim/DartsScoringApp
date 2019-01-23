@@ -28,43 +28,50 @@ class PlayerTest {
 	void testScoreManagement() {
 		assertEquals(490, p.subtractPoints(11));
 		assertEquals(490, p.getCurrentPoints());
+		assertEquals(1, p.getNumberOfDarts());
 		
 		assertEquals(489, p.subtractPoints(1));
 		assertEquals(489, p.getCurrentPoints());
+		assertEquals(2, p.getNumberOfDarts());
 		
 		assertEquals(489, p.subtractPoints(0));
 		assertEquals(489, p.getCurrentPoints());
+		assertEquals(3, p.getNumberOfDarts());
 		
 		assertEquals(429, p.subtractPoints(60));
 		assertEquals(429, p.getCurrentPoints());
+		assertEquals(4, p.getNumberOfDarts());
 		
 		p.resetPointsToPreviousValue(489);
 		assertEquals(489, p.getCurrentPoints());
+		assertEquals(5, p.getNumberOfDarts());
 		
 		assertEquals(439, p.subtractPoints(50));
 		assertEquals(439, p.getCurrentPoints());
+		assertEquals(6, p.getNumberOfDarts());
 	}
 	
 	@Test
-	void testDartsCounting() {
-		assertEquals(0, p.getNumberOfDarts());
+	void testThreeDartAverage() {
+		p.subtractPoints(50);
+		p.subtractPoints(0);
+		p.subtractPoints(50);
 		
-		p.addDart();
-		assertEquals(1, p.getNumberOfDarts());
+		assertEquals(100, p.getThreeDartAverage(), 0.001);
 		
-		p.addDart();
-		p.addDart();
-		assertEquals(3, p.getNumberOfDarts());
+		p.subtractPoints(10);
+		p.subtractPoints(5);
+		p.subtractPoints(5);
+
+		assertEquals(60, p.getThreeDartAverage(), 0.001);
 		
-		p.addDart();
-		p.addDart();
-		p.addDart();
-		assertEquals(6, p.getNumberOfDarts());
+		p.subtractPoints(60);
+		p.subtractPoints(60);
+		p.subtractPoints(60);
 		
-		for (int i = 7; i < 65; i++) {
-			p.addDart();
-			assertEquals(i, p.getNumberOfDarts());
-		}
+		p.subtractPoints(0);
+		
+		assertEquals(90, p.getThreeDartAverage(), 0.001);
 	}
 
 }

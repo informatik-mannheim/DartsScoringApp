@@ -107,15 +107,17 @@ public class GameUi {
 			longest = Math.max(longest, p.getName().length());
 		}
 		
-		String separation = " " + "-".repeat(19 + longest) + "\n";
+		String separation = " " + "-".repeat(30 + longest) + "\n";
 		sb.append(separation);
 		sb.append(String.format("| Player%" + (Math.max(longest - 5, 1)) 
-												+ "s| Score | Darts |\n", ""));
+											+ "s| Score | Darts | 3 D.Avg. |\n", ""));
 		sb.append(separation);
+		
 		for (Player p : score.getPlayers()) {
 			sb.append(String.format("| %" + longest + "s ", p.getName()));
 			sb.append(String.format("| %5d ", p.getCurrentPoints()));
-			sb.append(String.format("| %5d |", p.getNumberOfDarts()));
+			sb.append(String.format("| %5d ", p.getNumberOfDarts()));
+			sb.append(String.format("| %8.2f |", p.getThreeDartAverage()));
 			sb.append("\n");
 		}
 		sb.append(separation);
