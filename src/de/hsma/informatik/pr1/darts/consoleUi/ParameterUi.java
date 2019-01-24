@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import de.hsma.informatik.pr1.darts.dto.GameParameterDTO;
 
-public class ParamaterUi {
+public class ParameterUi {
 	public static Scanner kb = new Scanner(System.in);
 
 	public GameParameterDTO enterGameParameters() {

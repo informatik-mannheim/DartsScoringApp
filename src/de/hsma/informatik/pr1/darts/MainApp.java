@@ -1,6 +1,6 @@
 package de.hsma.informatik.pr1.darts;
 
-import de.hsma.informatik.pr1.darts.consoleUi.ParamaterUi;
+import de.hsma.informatik.pr1.darts.consoleUi.ParameterUi;
 import de.hsma.informatik.pr1.darts.dto.GameParameterDTO;
 import de.hsma.informatik.pr1.darts.consoleUi.GameUi;
 
@@ -17,14 +17,14 @@ import de.hsma.informatik.pr1.darts.consoleUi.GameUi;
 public class MainApp {
 
 	public static void main(String[] args) {
-		GameParameterDTO params = new ParamaterUi().enterGameParameters();
+		GameParameterDTO params = new ParameterUi().enterGameParameters();
 		
 		DartsGame game = new DartsGame(params);
 		
 		GameUi ui = new GameUi(game);
 		ui.playGame();
 		
-		ParamaterUi.kb.close();
+		ParameterUi.kb.close();
 	}
 
 }
