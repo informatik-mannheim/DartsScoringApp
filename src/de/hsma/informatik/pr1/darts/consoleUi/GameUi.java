@@ -16,7 +16,7 @@ public class GameUi {
 	public GameUi(DartsGame game) {
 		super();
 		this.game = game;
-		kb = new Scanner(System.in);
+		kb = ParameterUi.kb;
 	}
 
 	public void playGame() {
