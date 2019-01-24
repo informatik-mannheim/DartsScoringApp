@@ -17,13 +17,18 @@ import de.hsma.informatik.pr1.darts.consoleUi.GameUi;
 public class MainApp {
 
 	public static void main(String[] args) {
-		GameParameterDTO params = new ParameterUi().enterGameParameters();
-		
-		DartsGame game = new DartsGame(params);
-		
-		GameUi ui = new GameUi(game);
-		ui.playGame();
-		
+		GameUi ui;
+
+		do {
+			GameParameterDTO params = new ParameterUi().enterGameParameters();
+			DartsGame game = new DartsGame(params);
+
+			ui = new GameUi(game);
+			ui.playGame();
+
+		} while (ui.playAgain());
+
+		ui.printGoodbye();
 		ParameterUi.kb.close();
 	}
 

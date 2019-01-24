@@ -77,9 +77,6 @@ public class GameUi {
 			System.out.println();
 			game.nextPlayer();
 		} while(true);
-
-		System.out.println();
-		System.out.println("Good bye from the Darts Scoring App!");
 	}
 	
 	private void printHelp() {
@@ -121,6 +118,17 @@ public class GameUi {
 		sb.append(separation);
 		
 		return sb.toString();
+	}
+
+	public boolean playAgain() {
+		System.out.println();
+		System.out.print("Do you want to play another game? (y/n): ");
+		return kb.nextLine().toLowerCase().equals("y");
+	}
+	
+	public void printGoodbye() {
+		System.out.println();
+		System.out.println("Good bye from the Darts Scoring App!");
 	}
 
 }
