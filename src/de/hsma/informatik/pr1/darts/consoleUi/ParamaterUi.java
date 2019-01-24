@@ -29,6 +29,8 @@ public class ParamaterUi {
 		boolean doubleIn = kb.nextLine().toLowerCase().equals("y");
 		System.out.print("Do you want to play double out? (y/n): ");
 		boolean doubleOut = kb.nextLine().toLowerCase().equals("y");
+
+		System.out.println();
 		
 		return new GameParameterDTO(points, names, doubleIn, doubleOut);
 	}

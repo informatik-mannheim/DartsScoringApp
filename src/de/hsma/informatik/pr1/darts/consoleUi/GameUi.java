@@ -17,13 +17,11 @@ public class GameUi {
 		super();
 		this.game = game;
 		kb = new Scanner(System.in);
-
-		System.out.println();
 	}
 
 	public void playGame() {
-		System.out.println("A new game begins...");
-		System.out.println("Type 'exit' to end the app or 'help' to get a brief usage information.");
+		System.out.print("A new game begins... ");
+		System.out.println("type 'exit' to end the app or 'help' to get a brief usage information.");
 		System.out.println();
 
 		gameLoop:
