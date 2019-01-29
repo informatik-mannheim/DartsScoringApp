@@ -27,7 +27,7 @@ public class GameUi {
 		gameLoop:
 		do {
 			System.out.println(generateScoreboard(game.getScoreBoardInfo()));
-			System.out.println("Next Player: " + game.getCurrentPlayerName());
+			System.out.println("Current Player: " + game.getCurrentPlayerName());
 
 			int sum = 0;
 			for (int d = 1; d <= 3; d++) {
