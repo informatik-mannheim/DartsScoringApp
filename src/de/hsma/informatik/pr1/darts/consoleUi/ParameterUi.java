@@ -10,10 +10,10 @@ public class ParameterUi {
 	public GameParameterDTO enterGameParameters() {
 		
 		System.out.println("Hello Darts!");
+		System.out.println("Start by entering the game parameters. Defaults can be selected by merely pressing enter.");
 		System.out.println();
 		
-		System.out.print("Please enter number of players: ");
-		int nop = Integer.parseInt(kb.nextLine());
+		int nop = readNumber("Please enter number of players", "2");
 		String[] names = new String[nop];
 		
 		for (int i = 0; i < nop; i++) {
@@ -22,17 +22,38 @@ public class ParameterUi {
 		}
 		
 		System.out.println();
-		System.out.print("Please enter the amount of points you want to play: ");
-		int points = Integer.parseInt(kb.nextLine());
+		int points = readNumber("Please enter the amount of points you want to play", "501");
 		
-		System.out.print("Do you want to play double in? (y/n): ");
-		boolean doubleIn = kb.nextLine().toLowerCase().equals("y");
-		System.out.print("Do you want to play double out? (y/n): ");
-		boolean doubleOut = kb.nextLine().toLowerCase().equals("y");
+		boolean doubleIn = readYesNo("Do you want to play double in?", "n");
+		boolean doubleOut = readYesNo("Do you want to play double out?", "y");
 
 		System.out.println();
 		
 		return new GameParameterDTO(points, names, doubleIn, doubleOut);
 	}
 
+	private int readNumber(String prompt, String defaultValue) {
+		System.out.print(prompt + " (default = " + defaultValue + "): ");
+		
+		String input = kb.nextLine();
+		if (input.isEmpty()) {
+			input = defaultValue;
+			System.out.println("--> " + input);
+		}
+		
+		return Integer.parseInt(input);
+	}
+	
+	private boolean readYesNo(String question, String defaultValue) {
+		System.out.print(question + " (y/n; default = " + defaultValue + "): ");
+		
+		String input = kb.nextLine().toLowerCase();
+		
+		if (input.isEmpty()) {
+			input = defaultValue;
+			System.out.println("--> " + input);
+		}
+			
+		return input.equals("y");
+	}
 }
