@@ -20,8 +20,8 @@ public class GameUi {
 	}
 
 	public void playGame() {
-		System.out.print("A new game begins... ");
-		System.out.println("type 'exit' to end the app or 'help' to get a brief usage information.");
+		System.out.println("A new game begins: " + game.toString());
+		System.out.println("Type 'exit' to end the game or 'help' to get a brief usage information.");
 		System.out.println();
 
 		gameLoop:

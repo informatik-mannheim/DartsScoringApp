@@ -62,4 +62,8 @@ public class DartsGame {
 		return players[counter % players.length].getName();
 	}
  
+	public String toString() {
+		return players.length + " players, " + startingPoints + " points," 
+					+ (doubleIn? "":" no") + " double in and" + (doubleOut? "":" no") + " double out.";
+	}
 }
