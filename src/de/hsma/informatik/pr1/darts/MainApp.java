@@ -32,7 +32,7 @@ public class MainApp {
 				game.newLeg();
 			} while (!game.isWon());
 			
-		} while (ui.playAgain(game.isWon()));
+		} while (ui.playAgain());
 
 		ui.printGoodbye();
 		ParameterUi.kb.close();

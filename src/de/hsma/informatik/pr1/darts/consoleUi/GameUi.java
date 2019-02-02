@@ -115,8 +115,8 @@ public class GameUi {
 		return sb.toString();
 	}
 
-	public boolean playAgain(boolean isWon) {
-		if (isWon)
+	public boolean playAgain() {
+		if (game.isWon())
 			System.out.println("Player wins game!");
 
 		System.out.println();
