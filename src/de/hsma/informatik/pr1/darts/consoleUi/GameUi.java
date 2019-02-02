@@ -28,10 +28,8 @@ public class GameUi {
 		
 		gameLoop:
 			do {
-
-				System.out.println();
-				System.out.println(generateScoreboard(game.getScoreBoardInfo()));
-				System.out.println("Current Player: " + game.getCurrentPlayerName());
+				printScoreboard();
+				printCurrentPlayer();
 
 				int sum = 0;
 				for (int d = 1; d <= 3; d++) {
@@ -39,14 +37,19 @@ public class GameUi {
 
 					String input = kb.nextLine();
 
-					if (input.equals("exit"))
+					switch (input) {
+					case "exit":
 						break gameLoop;
-					else if (input.equals("help")) {
+					case "help":
 						printHelp();
 						d--;
 						continue;
+					case "info":
+						System.out.println(game.toString());
+						d--;
+						continue;
 					}
-
+			
 					ParseResultDTO parseResult = Board.parseInput(input);
 					if (!parseResult.isSuccessfullyParsed()) {
 						d--;
@@ -63,7 +66,8 @@ public class GameUi {
 
 						if (calcResult.getRemaining() == 0) {
 							System.out.println("Player wins leg!");
-							System.out.println();
+							printScoreboard();
+							
 							break gameLoop;
 						} 
 					} else {
@@ -78,22 +82,31 @@ public class GameUi {
 
 				} // for 
 				System.out.println("Sum: " + sum);
-
 				System.out.println();
+				
 				game.nextPlayer();
 			} while(true);
 	}
 
+	private void printScoreboard() {
+		System.out.println();
+		System.out.println(generateScoreboard(game.getScoreBoardInfo()));
+	}
+	
+	private void printCurrentPlayer() {
+		System.out.println("Current Player: " + game.getCurrentPlayerName());
+	}
+	
 	private void printHelp() {
 		System.out.println();
 		System.out.println("How to use the Darts Scoring App:");
-		System.out.println("Simply enter the scores thrown by the user when asked for them.");
-		System.out.println("Use can use numbers for single scores. Please mark double fields");
+		System.out.println("Enter the scores thrown by the user when asked for them.");
+		System.out.println("You can use numbers for single scores. Mark double fields");
 		System.out.println("with a leading D and triple fields with a T, e.g. T20.");
 		System.out.println("Bull can be entered with BL, Bull's Eye with BE. You can type");
 		System.out.println("- or MS for a missed dart and BO for a bouncer.");
 		System.out.println();
-		System.out.println("Type Exit to leave the program.");
+		System.out.println("Type 'Exit' to leave the program or 'info' for details about the current game.");
 		System.out.println();
 	}
 
