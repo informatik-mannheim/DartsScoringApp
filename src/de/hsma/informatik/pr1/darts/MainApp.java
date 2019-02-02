@@ -26,7 +26,9 @@ public class MainApp {
 			ui = new GameUi(game);
 			
 			do {
-				ui.playLeg();
+				if (!ui.playLeg())
+					break;
+				
 				game.newLeg();
 			} while (!game.isWon());
 			

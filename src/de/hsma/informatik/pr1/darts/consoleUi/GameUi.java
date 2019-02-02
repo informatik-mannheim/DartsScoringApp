@@ -23,23 +23,22 @@ public class GameUi {
 		System.out.println();
 	}
 
-	public void playLeg() {
+	public boolean playLeg() {
 		System.out.println("A new leg begins.");
-		
+
 		gameLoop:
-			do {
-				printScoreboard();
-				printCurrentPlayer();
+		do {
+			printScoreboard();
+			printCurrentPlayer();
 
-				int sum = 0;
-				for (int d = 1; d <= 3; d++) {
-					System.out.print(d + "> ");
+			int sum = 0;
+			for (int d = 1; d <= 3; d++) {
+				System.out.print(d + "> ");
+				String input = kb.nextLine();
 
-					String input = kb.nextLine();
-
-					switch (input) {
+				switch (input) {
 					case "exit":
-						break gameLoop;
+						return false;
 					case "help":
 						printHelp();
 						d--;
@@ -48,66 +47,43 @@ public class GameUi {
 						System.out.println(game.toString());
 						d--;
 						continue;
+				}
+
+				ParseResultDTO parseResult = Board.parseInput(input);
+				if (!parseResult.isSuccessfullyParsed()) {
+					d--;
+					System.out.println("\t-> Incorrect input!");
+					continue;
+				}
+
+				CalculationResultDTO calcResult = game.calculatePointsForCurrentPlayer(parseResult);
+				if (calcResult.isValid()) {
+					sum += calcResult.getScore();
+					System.out.println("\t-> " + calcResult.getRemaining());
+
+					if (calcResult.getRemaining() == 0) {
+						System.out.println("Player wins leg!");
+						printScoreboard();
+						break gameLoop;
+					} 
+				} else {
+					System.out.println(calcResult.getReason() 
+							+ " -> " + calcResult.getRemaining() + " remaining");
+
+					if (calcResult.getReason().equals("busted")) {
+						sum = 0;
+						break;
 					}
-			
-					ParseResultDTO parseResult = Board.parseInput(input);
-					if (!parseResult.isSuccessfullyParsed()) {
-						d--;
-						System.out.println("\t-> Incorrect input!");
-						continue;
-					}
+				}
 
-					CalculationResultDTO calcResult 
-							= game.calculatePointsForCurrentPlayer(parseResult);
+			} // for 
+			System.out.println("Sum: " + sum);
+			System.out.println();
 
-					if (calcResult.isValid()) {
-						sum += calcResult.getScore();
-						System.out.println("\t-> " + calcResult.getRemaining());
-
-						if (calcResult.getRemaining() == 0) {
-							System.out.println("Player wins leg!");
-							printScoreboard();
-							
-							break gameLoop;
-						} 
-					} else {
-						System.out.println(calcResult.getReason() 
-								+ " -> " + calcResult.getRemaining() + " remaining");
-
-						if (calcResult.getReason().equals("busted")) {
-							sum = 0;
-							break;
-						}
-					}
-
-				} // for 
-				System.out.println("Sum: " + sum);
-				System.out.println();
-				
-				game.nextPlayer();
-			} while(true);
-	}
-
-	private void printScoreboard() {
-		System.out.println();
-		System.out.println(generateScoreboard(game.getScoreBoardInfo()));
-	}
-	
-	private void printCurrentPlayer() {
-		System.out.println("Current Player: " + game.getCurrentPlayerName());
-	}
-	
-	private void printHelp() {
-		System.out.println();
-		System.out.println("How to use the Darts Scoring App:");
-		System.out.println("Enter the scores thrown by the user when asked for them.");
-		System.out.println("You can use numbers for single scores. Mark double fields");
-		System.out.println("with a leading D and triple fields with a T, e.g. T20.");
-		System.out.println("Bull can be entered with BL, Bull's Eye with BE. You can type");
-		System.out.println("- or MS for a missed dart and BO for a bouncer.");
-		System.out.println();
-		System.out.println("Type 'Exit' to leave the program or 'info' for details about the current game.");
-		System.out.println();
+			game.nextPlayer();
+		} while(true);
+		
+		return true;
 	}
 
 	private String generateScoreboard(ScoreBoardDTO score) {
@@ -123,7 +99,7 @@ public class GameUi {
 		String separation = " " + "-".repeat(36 + longest) + "\n";
 		sb.append(separation);
 		sb.append(String.format("| Player%" + (Math.max(longest - 5, 1)) 
-							+ "s| Score | Darts | Legs | 3 D.Avg. |\n", ""));
+				+ "s| Score | Darts | Legs | 3 D.Avg. |\n", ""));
 		sb.append(separation);
 
 		for (Player p : score.getPlayers()) {
@@ -138,7 +114,6 @@ public class GameUi {
 
 		return sb.toString();
 	}
-	
 
 	public boolean playAgain(boolean isWon) {
 		if (isWon)
@@ -150,6 +125,28 @@ public class GameUi {
 		return kb.nextLine().toLowerCase().equals("y");
 	}
 
+	private void printScoreboard() {
+		System.out.println();
+		System.out.println(generateScoreboard(game.getScoreBoardInfo()));
+	}
+
+	private void printCurrentPlayer() {
+		System.out.println("Current Player: " + game.getCurrentPlayerName());
+	}
+
+	private void printHelp() {
+		System.out.println();
+		System.out.println("How to use the Darts Scoring App:");
+		System.out.println("Enter the scores thrown by the user when asked for them.");
+		System.out.println("You can use numbers for single scores. Mark double fields");
+		System.out.println("with a leading D and triple fields with a T, e.g. T20.");
+		System.out.println("Bull can be entered with BL, Bull's Eye with BE. You can type");
+		System.out.println("- or MS for a missed dart and BO for a bouncer.");
+		System.out.println();
+		System.out.println("Type 'Exit' to leave the program or 'info' for details about the current game.");
+		System.out.println();
+	}
+	
 	public void printGoodbye() {
 		System.out.println();
 		System.out.println("Good bye from the Darts Scoring App!");
