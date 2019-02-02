@@ -1,6 +1,7 @@
 package de.hsma.informatik.pr1.darts;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ class DartsGameTest {
 	@Test
 	void testNormalGame() {
 		DartsGame game = new DartsGame(new GameParameterDTO(
-				501, new String[] {"Player 1", "Player 2"}, false, false));
+				501, new String[] {"Player 1", "Player 2"}, false, false, 1));
 		
 		String name1 = game.getCurrentPlayerName();
 		game.nextPlayer();
@@ -74,7 +75,7 @@ class DartsGameTest {
 	
 	@Test
 	void testDoubleInGame() {
-		DartsGame game = new DartsGame(new GameParameterDTO(501, new String[] {"1", "2"}, true, false));
+		DartsGame game = new DartsGame(new GameParameterDTO(501, new String[] {"1", "2"}, true, false, 1));
 		
 		CalculationResultDTO res = game.calculatePointsForCurrentPlayer(
 												new ParseResultDTO("t20", true, 20, 3));
@@ -92,7 +93,7 @@ class DartsGameTest {
 	
 	@Test
 	void testDoubleOutGame() {
-		DartsGame game = new DartsGame(new GameParameterDTO(101, new String[] {"1", "2"}, false, true));
+		DartsGame game = new DartsGame(new GameParameterDTO(101, new String[] {"1", "2"}, false, true, 1));
 		
 		CalculationResultDTO res = game.calculatePointsForCurrentPlayer(
 											new ParseResultDTO("t20", true, 20, 3));
@@ -129,6 +130,54 @@ class DartsGameTest {
 		
 		res = game.calculatePointsForCurrentPlayer(new ParseResultDTO("D1", true, 1, 2));
 		assertEquals(0, res.getRemaining());
+	}
+	
+	@Test
+	void testMultiLegGame() {
+		DartsGame game = new DartsGame(new GameParameterDTO(
+				101, new String[] {"Player 1", "Player 2"}, false, false, 3));
+		
+		game.calculatePointsForCurrentPlayer(new ParseResultDTO("t20", true, 20, 3));
+		game.calculatePointsForCurrentPlayer(new ParseResultDTO("d20", true, 20, 2));
+		int points = game.calculatePointsForCurrentPlayer(new ParseResultDTO("1", true, 1, 1)).getRemaining();
+		assertEquals(0, points);
+		
+		ScoreBoardDTO score = game.getScoreBoardInfo();
+		assertEquals(0, score.getPlayers()[0].getCurrentPoints());
+		assertEquals(101, score.getPlayers()[1].getCurrentPoints());
+		assertEquals(3, score.getPlayers()[0].getNumberOfDarts());
+		assertEquals(0, score.getPlayers()[1].getNumberOfDarts());
+		assertEquals(1, score.getPlayers()[0].getLegsWon());
+		assertEquals(0, score.getPlayers()[1].getLegsWon());
+		
+		game.newLeg();
+		
+		score = game.getScoreBoardInfo();
+		assertEquals(101, score.getPlayers()[0].getCurrentPoints());
+		assertEquals(101, score.getPlayers()[1].getCurrentPoints());
+		assertEquals(0, score.getPlayers()[0].getNumberOfDarts());
+		assertEquals(0, score.getPlayers()[1].getNumberOfDarts());
+		assertEquals(1, score.getPlayers()[0].getLegsWon());
+		assertEquals(0, score.getPlayers()[1].getLegsWon());
+		
+		// second player should begin second leg
+		game.nextPlayer();
+		
+		game.calculatePointsForCurrentPlayer(new ParseResultDTO("t20", true, 20, 3));
+		game.calculatePointsForCurrentPlayer(new ParseResultDTO("d20", true, 20, 2));
+		points = game.calculatePointsForCurrentPlayer(new ParseResultDTO("1", true, 1, 1)).getRemaining();
+		assertEquals(0, points);
+		
+		score = game.getScoreBoardInfo();
+		assertEquals(0, score.getPlayers()[0].getCurrentPoints());
+		assertEquals(101, score.getPlayers()[1].getCurrentPoints());
+		assertEquals(3, score.getPlayers()[0].getNumberOfDarts());
+		assertEquals(0, score.getPlayers()[1].getNumberOfDarts());
+		assertEquals(2, score.getPlayers()[0].getLegsWon());
+		assertEquals(0, score.getPlayers()[1].getLegsWon());
+		
+		assertTrue(game.isWon());
+
 	}
 
 }

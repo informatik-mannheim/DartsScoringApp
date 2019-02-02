@@ -11,6 +11,7 @@ public class DartsGame {
 	private int pointsBeforeThisRound;
 	private int startingPoints;
 	private boolean doubleIn, doubleOut;
+	private int legsToPlay, currentLeg;
 
 	public DartsGame(GameParameterDTO params) {
 		counter = 0;
@@ -18,19 +19,33 @@ public class DartsGame {
 		startingPoints = pointsBeforeThisRound = params.getPoints();
 		doubleIn = params.isDoubleIn() ;
 		doubleOut = params.isDoubleOut();
+		legsToPlay = params.getLegsToPlay();
+		currentLeg = 1;
 		
 		players = new Player[params.getNames().length];
 		for (int p = 0; p < players.length; p++) {
 			players[p] = new Player(params.getNames()[p], pointsBeforeThisRound);
 		}
 	}
+	
+	public void newLeg() {
+		for (Player p : players) {
+			p.resetPoints();
+		}
+		currentLeg++;
+		counter = 0;
+	}
 
 	public ScoreBoardDTO getScoreBoardInfo() {
 		return new ScoreBoardDTO(players, counter);
 	}
 
+	private Player getCurrentPlayer() {
+		return players[(counter + currentLeg - 1) % players.length];
+	}
+	
 	public CalculationResultDTO calculatePointsForCurrentPlayer(ParseResultDTO parsed) {
-		Player player = players[counter % players.length];
+		Player player = getCurrentPlayer();
 		int oldPoints = player.getCurrentPoints();
 		
 		int score = parsed.getActualScore();
@@ -46,6 +61,8 @@ public class DartsGame {
 			player.resetPointsToPreviousValue(pointsBeforeThisRound);
 		} else {
 			int remaining = player.subtractPoints(score);
+			if (remaining == 0)
+				currentPlayerWinsLeg();
 			result = new CalculationResultDTO(score, remaining, "");
 		}
 		
@@ -54,16 +71,30 @@ public class DartsGame {
 	
 	public void nextPlayer() {
 		counter++;
+		pointsBeforeThisRound = getCurrentPlayer().getCurrentPoints();
+	}
+	
+	public boolean isWon() {
+		for (Player p : players) {
+			if (p.getLegsWon() == (legsToPlay / 2 + 1)) 
+				return true;
+		}
 		
-		pointsBeforeThisRound = players[counter % players.length].getCurrentPoints();
+		return false;
+	}
+	
+	private void currentPlayerWinsLeg() {
+		getCurrentPlayer().increaseWonLegs();
 	}
 	
 	public String getCurrentPlayerName() {
-		return players[counter % players.length].getName();
+		return getCurrentPlayer().getName();
 	}
  
 	public String toString() {
 		return players.length + " players, " + startingPoints + " points," 
-					+ (doubleIn? "":" no") + " double in and" + (doubleOut? "":" no") + " double out.";
+					+ (doubleIn? "":" no") + " double in and" + (doubleOut? "":" no") + " double out, "
+					+ "best of " + legsToPlay + " legs.";
 	}
+	
 }

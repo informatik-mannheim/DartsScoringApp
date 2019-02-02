@@ -18,15 +18,19 @@ public class MainApp {
 
 	public static void main(String[] args) {
 		GameUi ui;
+		DartsGame game;
 
 		do {
 			GameParameterDTO params = new ParameterUi().enterGameParameters();
-			DartsGame game = new DartsGame(params);
-
+			game = new DartsGame(params);
 			ui = new GameUi(game);
-			ui.playGame();
-
-		} while (ui.playAgain());
+			
+			do {
+				ui.playLeg();
+				game.newLeg();
+			} while (!game.isWon());
+			
+		} while (ui.playAgain(game.isWon()));
 
 		ui.printGoodbye();
 		ParameterUi.kb.close();

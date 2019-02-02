@@ -5,11 +5,13 @@ public class Player {
 	private int currentPoints;
 	private int startingPoints;
 	private int numberOfDarts;
+	private int numberOfLegsWon;
 	
 	public Player(String name, int points) {
 		NAME = name;
 		startingPoints = currentPoints = points;
 		numberOfDarts = 0;
+		numberOfLegsWon = 0;
 	}
 
 	public String getName() {
@@ -34,10 +36,23 @@ public class Player {
 		numberOfDarts++;
 		currentPoints = previousPoints;
 	}
+	
+	void resetPoints() {
+		currentPoints = startingPoints;
+		numberOfDarts = 0;
+	}
 
 	public double getThreeDartAverage() {
 		double avg = 1.0 * (startingPoints - currentPoints) / numberOfDarts * 3;
 		return avg;
+	}
+	
+	void increaseWonLegs() {
+		numberOfLegsWon++;
+	}
+	
+	public int getLegsWon() {
+		return numberOfLegsWon;
 	}
 	
 }

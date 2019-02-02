@@ -8,7 +8,6 @@ public class ParameterUi {
 	public static Scanner kb = new Scanner(System.in);
 
 	public GameParameterDTO enterGameParameters() {
-		
 		System.out.println("Hello Darts!");
 		System.out.println("Start by entering the game parameters. Defaults can be selected by merely pressing enter.");
 		System.out.println();
@@ -28,8 +27,10 @@ public class ParameterUi {
 		boolean doubleOut = readYesNo("Do you want to play double out?", "y");
 
 		System.out.println();
+		int legsToPlay = readNumber("Please enter how many legs (best of ...) you want to play", "1");
+		System.out.println();
 		
-		return new GameParameterDTO(points, names, doubleIn, doubleOut);
+		return new GameParameterDTO(points, names, doubleIn, doubleOut, legsToPlay);
 	}
 
 	private int readNumber(String prompt, String defaultValue) {
