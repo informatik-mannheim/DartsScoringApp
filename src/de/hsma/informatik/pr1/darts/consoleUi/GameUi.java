@@ -18,6 +18,9 @@ public class GameUi {
 		this.game = game;
 		kb = ParameterUi.kb;
 
+		System.out.println();
+		System.out.println("*".repeat(25));
+		
 		System.out.println("A new game begins: " + game.toString());
 		System.out.println("Type 'exit' to end the game or 'help' to get a brief usage information.");
 		System.out.println();
@@ -115,14 +118,14 @@ public class GameUi {
 		return sb.toString();
 	}
 
-	public boolean playAgain() {
+	public char playAgain() {
 		if (game.isWon())
 			System.out.println("Player wins game!");
 
 		System.out.println();
 
-		System.out.print("Do you want to play another game? (y/n): ");
-		return kb.nextLine().toLowerCase().equals("y");
+		System.out.print("Do you want to play another game? (y/n or r for repeating game with identical setup): ");
+		return kb.nextLine().toLowerCase().charAt(0);
 	}
 
 	private void printScoreboard() {

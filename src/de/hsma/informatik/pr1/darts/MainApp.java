@@ -19,9 +19,13 @@ public class MainApp {
 	public static void main(String[] args) {
 		GameUi ui;
 		DartsGame game;
+		GameParameterDTO params = null;
+		char continuePlaying = ' ';
 
 		do {
-			GameParameterDTO params = new ParameterUi().enterGameParameters();
+			if (continuePlaying != 'r')
+				params = new ParameterUi().enterGameParameters();
+			
 			game = new DartsGame(params);
 			ui = new GameUi(game);
 			
@@ -32,7 +36,8 @@ public class MainApp {
 				game.newLeg();
 			} while (!game.isWon());
 			
-		} while (ui.playAgain());
+			continuePlaying = ui.playAgain();
+		} while (continuePlaying == 'y' || continuePlaying == 'r');
 
 		ui.printGoodbye();
 		ParameterUi.kb.close();

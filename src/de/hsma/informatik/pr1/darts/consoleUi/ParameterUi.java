@@ -28,7 +28,6 @@ public class ParameterUi {
 
 		System.out.println();
 		int legsToPlay = readNumber("Please enter how many legs (best of ...) you want to play", "1");
-		System.out.println();
 		
 		return new GameParameterDTO(points, names, doubleIn, doubleOut, legsToPlay);
 	}
