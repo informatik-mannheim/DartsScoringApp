@@ -29,7 +29,7 @@ public class ParameterUi {
 		System.out.println();
 		int legsToPlay = readNumber("Please enter how many legs (best of ...) you want to play", "1");
 		
-		return new GameParameterDTO(points, names, doubleIn, doubleOut, legsToPlay);
+		return new GameParameterDTO(points, doubleIn, doubleOut, legsToPlay, names);
 	}
 
 	private int readNumber(String prompt, String defaultValue) {
@@ -56,4 +56,5 @@ public class ParameterUi {
 			
 		return input.equals("y");
 	}
+	
 }

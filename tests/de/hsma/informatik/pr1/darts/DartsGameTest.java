@@ -15,7 +15,7 @@ class DartsGameTest {
 	@Test
 	void testNormalGame() {
 		DartsGame game = new DartsGame(new GameParameterDTO(
-				501, new String[] {"Player 1", "Player 2"}, false, false, 1));
+				501, false, false, 1, "Player 1", "Player 2"));
 		
 		String name1 = game.getCurrentPlayerName();
 		game.nextPlayer();
@@ -75,7 +75,7 @@ class DartsGameTest {
 	
 	@Test
 	void testDoubleInGame() {
-		DartsGame game = new DartsGame(new GameParameterDTO(501, new String[] {"1", "2"}, true, false, 1));
+		DartsGame game = new DartsGame(new GameParameterDTO(501, true, false, 1, "1", "2"));
 		
 		CalculationResultDTO res = game.calculatePointsForCurrentPlayer(
 												new ParseResultDTO("t20", true, 20, 3));
@@ -93,7 +93,7 @@ class DartsGameTest {
 	
 	@Test
 	void testDoubleOutGame() {
-		DartsGame game = new DartsGame(new GameParameterDTO(101, new String[] {"1", "2"}, false, true, 1));
+		DartsGame game = new DartsGame(new GameParameterDTO(101, false, true, 1, "1", "2"));
 		
 		CalculationResultDTO res = game.calculatePointsForCurrentPlayer(
 											new ParseResultDTO("t20", true, 20, 3));
@@ -135,7 +135,7 @@ class DartsGameTest {
 	@Test
 	void testMultiLegGame() {
 		DartsGame game = new DartsGame(new GameParameterDTO(
-				101, new String[] {"Player 1", "Player 2"}, false, false, 3));
+				101, false, false, 3, "Player 1", "Player 2"));
 		
 		game.calculatePointsForCurrentPlayer(new ParseResultDTO("t20", true, 20, 3));
 		game.calculatePointsForCurrentPlayer(new ParseResultDTO("d20", true, 20, 2));

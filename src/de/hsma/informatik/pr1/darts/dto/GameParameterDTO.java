@@ -5,7 +5,7 @@ public class GameParameterDTO {
 	private String[] names;
 	private boolean doubleIn, doubleOut;
 	
-	public GameParameterDTO(int points, String[] names, boolean doubleIn, boolean doubleOut, int legsToPlay) {
+	public GameParameterDTO(int points, boolean doubleIn, boolean doubleOut, int legsToPlay, String... names) {
 		this.points = points;
 		this.names = names;
 		this.doubleIn = doubleIn;
